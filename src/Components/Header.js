@@ -1,16 +1,12 @@
 import React from "react";
-import { connect } from "react-redux";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import { withRouter } from "react-router";
-
-import { search } from "../actions";
 
 class Header extends React.Component {
   state = { query: "" };
   onSubmit = e => {
     e.preventDefault();
-    this.props.search(this.state.query);
     this.props.history.push(`/search/${this.state.query}`);
   };
 
@@ -38,17 +34,4 @@ class Header extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    search: query => {
-      dispatch(search(query));
-    }
-  };
-}
-
-export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps
-  )(Header)
-);
+export default withRouter(Header);

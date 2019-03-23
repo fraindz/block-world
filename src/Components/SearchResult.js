@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
 import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
@@ -8,73 +9,102 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
 
-function SearchResult({ search }) {
-  if (search.loading) {
-    return (
-      <div className="mt-5">
-        <Spinner animation="grow" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
-      </div>
-    );
-  }
-  if (search.error) {
-    return (
-      <Container>
-        <Row>
-          <Col md={2} />
-          <Col xs={12} md={8}>
-            <Alert
-              variant="danger"
-              className="mx-auto mt-5"
-              style={{ width: "100%" }}
-            >
-              No matching block/transaction found for {search.query}
-            </Alert>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
+import { search } from "../actions";
 
-  return (
-    <React.Fragment>
-      {search.success ? (
+class SearchResult extends React.Component {
+  componentDidMount() {
+    console.log("nex :", this.props.match.params.query);
+    this.props.search(this.props.match.params.query);
+  }
+  componentDidUpdate(prevProps) {
+    console.log("nex :", prevProps.match.params.query);
+    if (this.props.match.params.query !== prevProps.match.params.query) {
+      this.props.search(this.props.match.params.query);
+    }
+  }
+  render() {
+    const searchData = this.props.searchData;
+    console.log("Rdn :", searchData);
+    if (searchData.loading) {
+      return (
+        <div className="mt-5">
+          <Spinner animation="grow" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      );
+    }
+    if (searchData.error) {
+      return (
         <Container>
           <Row>
-            <Col xs={12}>
+            <Col md={2} />
+            <Col xs={12} md={8}>
               <Alert
-                variant="success"
-                className="mx-auto mt-5 overflow-ellipsis"
+                variant="danger"
+                className="mx-auto mt-5"
                 style={{ width: "100%" }}
               >
-                Found matching{" "}
-                {search.searchType === "TX" ? "transaction" : "block"}
-                <br />
-                <Link
-                  to={
-                    search.searchType === "TX"
-                      ? `/tx/${search.query}`
-                      : `/block/${search.query}`
-                  }
-                >
-                  {search.query}
-                </Link>
+                No matching block/transaction found for {searchData.query}
               </Alert>
             </Col>
           </Row>
         </Container>
-      ) : (
-        ""
-      )}
-    </React.Fragment>
-  );
+      );
+    }
+
+    return (
+      <React.Fragment>
+        {searchData.success ? (
+          <Container>
+            <Row>
+              <Col xs={12}>
+                <Alert
+                  variant="success"
+                  className="mx-auto mt-5 overflow-ellipsis"
+                  style={{ width: "100%" }}
+                >
+                  Found matching{" "}
+                  {searchData.searchType === "TX" ? "transaction" : "block"}
+                  <br />
+                  <Link
+                    to={
+                      searchData.searchType === "TX"
+                        ? `/tx/${searchData.query}`
+                        : `/block/${searchData.query}`
+                    }
+                  >
+                    {searchData.query}
+                  </Link>
+                </Alert>
+              </Col>
+            </Row>
+          </Container>
+        ) : (
+          ""
+        )}
+      </React.Fragment>
+    );
+  }
 }
 
 function mapStateToProps(state) {
   return {
-    search: state.search
+    searchData: state.search
   };
 }
 
-export default connect(mapStateToProps)(SearchResult);
+function mapDispatchToProps(dispatch) {
+  return {
+    search: query => {
+      dispatch(search(query));
+    }
+  };
+}
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SearchResult)
+);
