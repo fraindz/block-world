@@ -45,6 +45,7 @@ class SearchResult extends React.Component {
                 className="mx-auto mt-5"
                 style={{ width: "100%" }}
               >
+                <i class="fas fa-times-circle mr-3" />
                 No matching block/transaction found for {searchData.query}
               </Alert>
             </Col>
@@ -64,6 +65,7 @@ class SearchResult extends React.Component {
                   className="mx-auto mt-5 overflow-ellipsis"
                   style={{ width: "100%" }}
                 >
+                  <i class="fas fa-check-circle mr-3" />
                   Found matching{" "}
                   {searchData.searchType === "TX" ? "transaction" : "block"}
                   <br />
