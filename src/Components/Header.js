@@ -1,43 +1,19 @@
 import React from "react";
+import { connect } from "react-redux";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import { withRouter } from "react-router";
 
-import store from "./config/store";
-
-const secondAction = data => ({
-  type: "SECOND",
-  payload: new Promise(res => res({ res: "Final resolution" }))
-});
-
-const firstAction = () => {
-  console.log("Is itc");
-  return dispatch => {
-    console.log("calling actm");
-    const response = dispatch({
-      type: "ACTM",
-      payload: new Promise(res => res({ res: "Pomise mlk ans" }))
-    });
-
-    response.then(data => {
-      console.log("calling second act");
-      dispatch(secondAction(data));
-    });
-  };
-};
+import { search } from "../actions";
 
 class Header extends React.Component {
   state = { query: "" };
   onSubmit = e => {
     e.preventDefault();
-    store.dispatch(
-      /*{
-      type: "ACTM",
-      payload: new Promise(res => res({ res: "Pomise mlk ans" }))
-    }*/
-      firstAction()
-    );
+    this.props.search(this.state.query);
+    this.props.history.push(`/search/${this.state.query}`);
   };
+
   onChange = ({ target }) => {
     this.setState({ query: target.value });
   };
@@ -62,4 +38,17 @@ class Header extends React.Component {
   }
 }
 
-export default withRouter(Header);
+function mapDispatchToProps(dispatch) {
+  return {
+    search: query => {
+      dispatch(search(query));
+    }
+  };
+}
+
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(Header)
+);

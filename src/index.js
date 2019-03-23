@@ -4,9 +4,11 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import store from "./config/store";
-import Header from "./Header";
+import Header from "./Components/Header";
 import RouteContent from "./Router";
 import "./styles.css";
+
+console.log("check");
 
 const app = (
   <Provider store={store}>
