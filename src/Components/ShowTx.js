@@ -11,7 +11,6 @@ import SummaryItem from "./SummaryItem";
 class ShowTx extends React.Component {
   componentDidMount() {
     if (!this.props.tx.hash) {
-      console.log("pou :", `/search/${this.props.match.params.hash}`);
       this.props.history.push(`/search/${this.props.match.params.hash}`);
     }
   }
@@ -69,19 +68,26 @@ class ShowTx extends React.Component {
           <Row>
             <Col xs={5} sm={5} md={4}>
               {tx.inputs &&
-                tx.inputs.map((i = { prev_out: {} }) => (
-                  <div className="overflow-ellipsis hash">
-                    {i.prev_out.addr}
-                  </div>
-                ))}
+                tx.inputs.map(i =>
+                  i.prev_out ? (
+                    <div
+                      key={i.prev_out.addr}
+                      className="overflow-ellipsis hash"
+                    >
+                      {i.prev_out.addr}
+                    </div>
+                  ) : (
+                    ""
+                  )
+                )}
             </Col>
             <Col xs={1} sm={1} md={1}>
-              <i class="fa fa-arrow-right" aria-hidden="true" />
+              <i className="fa fa-arrow-right" aria-hidden="true" />
             </Col>
             <Col xs={5} sm={5} md={7}>
               {tx.out &&
                 tx.out.map(o => (
-                  <div className="row">
+                  <div key={o.addr} className="row">
                     <div className="overflow-ellipsis hash">{o.addr}</div>
                     <div className="ml-2 fs-12">{`${toBTC(o.value)} BTC`}</div>
                   </div>

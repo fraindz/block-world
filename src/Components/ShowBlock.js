@@ -11,7 +11,6 @@ import SummaryItem from "./SummaryItem";
 class ShowBlock extends React.Component {
   componentDidMount() {
     if (!this.props.block.hash) {
-      console.log("pou :", `/search/${this.props.match.params.hash}`);
       this.props.history.push(`/search/${this.props.match.params.hash}`);
     }
   }
@@ -76,7 +75,7 @@ class ShowBlock extends React.Component {
         <Container className="tx">
           {block.tx &&
             block.tx.map(t => (
-              <Row>
+              <Row key={t.hash}>
                 <Col xs={5} sm={5} md={5} className="overflow-ellipsis hash">
                   {t.hash}
                 </Col>

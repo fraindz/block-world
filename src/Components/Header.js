@@ -1,8 +1,9 @@
 import React from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+
+import Navbar from "react-bootstrap/Navbar";
+import Form from "react-bootstrap/Form";
 
 class Header extends React.Component {
   state = { query: "" };
@@ -21,12 +22,21 @@ class Header extends React.Component {
     return (
       <Navbar className="header" bg="dark" expand="md">
         <Navbar.Brand>
-          <Link to="/">Block world</Link>
+          <Link to="/">
+            <i className="fa fa-globe mr-2" aria-hidden="true" />
+            Block world
+          </Link>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Toggle className="nav-toggle">
+          <i className="fa fa-search" />
+        </Navbar.Toggle>
+        <Navbar.Collapse
+          id="basic-navbar-nav"
+          style={{ justifyContent: "flex-end" }}
+        >
           <Form onSubmit={this.onSubmit}>
             <Form.Control
+              className="search-bar"
               type="text"
               placeholder="Search Block/Transaction"
               value={this.state.query}
