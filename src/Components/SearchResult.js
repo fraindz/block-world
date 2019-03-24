@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 
 import Alert from "react-bootstrap/Alert";
@@ -42,27 +41,6 @@ class SearchResult extends React.Component {
         <Container>
           <Row>
             <Col xs={12}>
-              {/* {searchData.success && (
-                <Alert
-                  variant="success"
-                  className="mx-auto mt-5 overflow-ellipsis"
-                  style={{ width: "100%" }}
-                >
-                  <i class="fas fa-check-circle mr-3" />
-                  Found matching{" "}
-                  {searchData.searchType === "TX" ? "transaction" : "block"}
-                  <br />
-                  <Link
-                    to={
-                      searchData.searchType === "TX"
-                        ? `/tx/${searchData.query}`
-                        : `/block/${searchData.query}`
-                    }
-                  >
-                    {searchData.query}
-                  </Link>
-                </Alert>
-              )} */}
               {searchData.error && (
                 <Alert
                   variant="danger"

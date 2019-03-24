@@ -19,6 +19,23 @@
   }  
 }
 
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  a {
+    color: white;
+  }
+  .hash {
+    font-size: 12px;
+    color: white;
+    text-align: center;
+  }
+}
+
 .summary {
   text-align: left;
   margin-bottom: 20px;

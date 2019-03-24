@@ -2,6 +2,7 @@ import { fetchApi } from "../utils";
 
 const GET_TRANSACTION = "GET_TRANSACTION";
 const GET_BLOCK = "GET_BLOCK";
+const GET_LATEST = "GET_LATEST";
 const SEARCH_PENDING = "SEARCH_PENDING";
 const SEARCH_SUCCESSFULL = "SEARCH_SUCCESSFULL";
 const SEARCH_FAILED = "SEARCH_FAILED";
@@ -14,6 +15,11 @@ const getTransaction = hash => ({
 const getBlock = hash => ({
   type: GET_BLOCK,
   payload: fetchApi(`https://blockchain.info/rawblock/${hash}?cors=true`)
+});
+
+const getLatest = hash => ({
+  type: GET_LATEST,
+  payload: fetchApi(`https://blockchain.info/latestblock?cors=true`)
 });
 
 const searchSuccessful = response => ({
@@ -47,8 +53,10 @@ export {
   search,
   getTransaction,
   getBlock,
+  getLatest,
   GET_TRANSACTION,
   GET_BLOCK,
+  GET_LATEST,
   SEARCH_PENDING,
   SEARCH_SUCCESSFULL,
   SEARCH_FAILED
