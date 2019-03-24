@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -77,7 +78,7 @@ class ShowBlock extends React.Component {
             block.tx.map(t => (
               <Row key={t.hash}>
                 <Col xs={5} sm={5} md={5} className="overflow-ellipsis hash">
-                  {t.hash}
+                  <Link to={`/search/${t.hash}`}>{t.hash}</Link>
                 </Col>
                 <Col xs={3} sm={3} md={3} className="fs-12">
                   {new Date(t.time).toGMTString()}
