@@ -13,6 +13,9 @@ const searchReducer = (state = {}, action) => {
       };
     case SEARCH_FAILED:
       return { query: state.query, loading: false, error: true };
+    case `GET_TRANSACTION_FULFILLED`:
+      console.log("Re :", action);
+      return state;
     default:
       return state;
   }

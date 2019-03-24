@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import store from "./config/store";
 import Header from "./Components/Header";
 import RouteContent from "./Router";
-import "./styles.css";
+import "./styles.scss";
 
 console.log("check");
 

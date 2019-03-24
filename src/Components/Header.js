@@ -1,13 +1,16 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
+import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 
 class Header extends React.Component {
   state = { query: "" };
   onSubmit = e => {
     e.preventDefault();
-    this.props.history.push(`/search/${this.state.query}`);
+    if (this.state.query) {
+      this.props.history.push(`/search/${this.state.query}`);
+    }
   };
 
   onChange = ({ target }) => {
@@ -16,8 +19,10 @@ class Header extends React.Component {
 
   render() {
     return (
-      <Navbar bg="light" expand="md">
-        <Navbar.Brand href="#home">Block world</Navbar.Brand>
+      <Navbar className="header" bg="dark" expand="md">
+        <Navbar.Brand>
+          <Link to="/">Block world</Link>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Form onSubmit={this.onSubmit}>

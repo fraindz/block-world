@@ -13,18 +13,21 @@ import { search } from "../actions";
 
 class SearchResult extends React.Component {
   componentDidMount() {
-    console.log("nex :", this.props.match.params.query);
     this.props.search(this.props.match.params.query);
   }
   componentDidUpdate(prevProps) {
-    console.log("nex :", prevProps.match.params.query);
-    if (this.props.match.params.query !== prevProps.match.params.query) {
-      this.props.search(this.props.match.params.query);
+    const { searchData, match, history, search } = this.props;
+    if (match.params.query !== prevProps.match.params.query) {
+      search(match.params.query);
+    }
+    if (!prevProps.searchData.success && searchData.success) {
+      history.replace(
+        `/${searchData.searchType.toLowerCase()}/${match.params.query}`
+      );
     }
   }
   render() {
     const searchData = this.props.searchData;
-    console.log("Rdn :", searchData);
     if (searchData.loading) {
       return (
         <div className="mt-5">
@@ -34,32 +37,12 @@ class SearchResult extends React.Component {
         </div>
       );
     }
-    if (searchData.error) {
-      return (
-        <Container>
-          <Row>
-            <Col md={2} />
-            <Col xs={12} md={8}>
-              <Alert
-                variant="danger"
-                className="mx-auto mt-5"
-                style={{ width: "100%" }}
-              >
-                <i class="fas fa-times-circle mr-3" />
-                No matching block/transaction found for {searchData.query}
-              </Alert>
-            </Col>
-          </Row>
-        </Container>
-      );
-    }
-
     return (
       <React.Fragment>
-        {searchData.success ? (
-          <Container>
-            <Row>
-              <Col xs={12}>
+        <Container>
+          <Row>
+            <Col xs={12}>
+              {/* {searchData.success && (
                 <Alert
                   variant="success"
                   className="mx-auto mt-5 overflow-ellipsis"
@@ -79,12 +62,20 @@ class SearchResult extends React.Component {
                     {searchData.query}
                   </Link>
                 </Alert>
-              </Col>
-            </Row>
-          </Container>
-        ) : (
-          ""
-        )}
+              )} */}
+              {searchData.error && (
+                <Alert
+                  variant="danger"
+                  className="mx-auto mt-5 overflow-ellipsis"
+                  style={{ width: "100%" }}
+                >
+                  <i className="fas fa-times-circle mr-3" />
+                  No matching block/transaction found for {searchData.query}
+                </Alert>
+              )}
+            </Col>
+          </Row>
+        </Container>
       </React.Fragment>
     );
   }
