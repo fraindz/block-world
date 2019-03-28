@@ -16,4 +16,4 @@ https://codesandbox.io/s/4w0504473x
 https://chain-yard.herokuapp.com
 
 ## App Demo
-![](app-demo.gif)
+![](responsive-blockchain.gif)
